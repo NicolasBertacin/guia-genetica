@@ -1,102 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guia de Genética — Leis de Mendel</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --verde: #1a6b3a; --verde-claro: #2d9657; --amarelo: #f5c842;
-    --bg: #f7f4ee; --papel: #fffef9; --tinta: #1c1c1c;
-    --cinza: #6b6b6b; --borda: #d4c9a8; --destaque: #e8f5ee;
-    --vermelho: #c0392b; --azul: #1a4f8b;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Source Serif 4', Georgia, serif; background: var(--bg); color: var(--tinta); line-height: 1.7; }
-  header { background: var(--verde); color: white; padding: 3rem 2rem 2rem; text-align: center; position: relative; overflow: hidden; }
-  header::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,.03) 20px, rgba(255,255,255,.03) 40px); }
-  header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; letter-spacing: -1px; position: relative; text-shadow: 0 2px 12px rgba(0,0,0,.3); }
-  header p { margin-top: .7rem; font-size: 1.05rem; opacity: .85; position: relative; }
-  nav { background: var(--papel); border-bottom: 2px solid var(--borda); display: flex; flex-wrap: wrap; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
-  nav button { flex: 1 1 auto; min-width: 110px; padding: .9rem 1rem; font-family: 'Source Serif 4', serif; font-size: .85rem; font-weight: 600; background: transparent; border: none; border-bottom: 3px solid transparent; cursor: pointer; color: var(--cinza); transition: all .2s; }
-  nav button:hover { color: var(--verde); background: var(--destaque); }
-  nav button.ativo { color: var(--verde); border-bottom-color: var(--verde); background: var(--destaque); }
-  .secao { display: none; max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
-  .secao.ativa { display: block; animation: fadeIn .3s ease; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-  h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--verde); margin-bottom: 1.5rem; padding-bottom: .6rem; border-bottom: 2px solid var(--borda); }
-  h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--tinta); margin: 2rem 0 .8rem; }
-  p { margin-bottom: 1rem; }
-  .card { background: var(--papel); border: 1px solid var(--borda); border-radius: 10px; padding: 1.5rem 1.8rem; margin-bottom: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,.04); }
-  .card-verde { border-left: 5px solid var(--verde); }
-  .card-amarelo { border-left: 5px solid var(--amarelo); background: #fffdf0; }
-  .card-azul { border-left: 5px solid var(--azul); }
-  .card-vermelho { border-left: 5px solid var(--vermelho); background: #fdf5f5; }
-</style>
-<style>
-  .badge { display: inline-block; padding: .2rem .7rem; border-radius: 20px; font-size: .78rem; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; margin-bottom: .5rem; }
-  .badge-verde { background: var(--verde); color: white; }
-  .badge-amarelo { background: var(--amarelo); color: #5a4000; }
-  .badge-azul { background: var(--azul); color: white; }
-  .badge-vermelho { background: var(--vermelho); color: white; }
-  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem; }
-  .vocab-item { background: var(--papel); border: 1px solid var(--borda); border-radius: 8px; padding: 1rem 1.2rem; cursor: pointer; transition: all .2s; position: relative; }
-  .vocab-item:hover { border-color: var(--verde); box-shadow: 0 3px 12px rgba(26,107,58,.12); transform: translateY(-2px); }
-  .vocab-item .termo { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--verde); margin-bottom: .3rem; }
-  .vocab-item .def { font-size: .9rem; color: var(--cinza); display: none; }
-  .vocab-item.aberto .def { display: block; color: var(--tinta); margin-top: .4rem; }
-  .vocab-item .hint { font-size: .75rem; color: var(--borda); position: absolute; bottom: .5rem; right: .8rem; }
-  .vocab-item.aberto .hint { display: none; }
-  .punnet { border-collapse: collapse; margin: 1.2rem auto; }
-  .punnet td, .punnet th { width: 80px; height: 60px; text-align: center; border: 2px solid var(--borda); font-size: 1.1rem; font-weight: 600; }
-  .punnet th { background: var(--verde); color: white; font-size: 1.2rem; }
-  .punnet td { background: var(--papel); }
-  .punnet td.dom { background: #d4edda; }
-  .punnet td.rec { background: #f8d7da; }
-  .questao { background: var(--papel); border: 1px solid var(--borda); border-radius: 10px; padding: 1.5rem 1.8rem; margin-bottom: 1.8rem; }
-  .questao .num { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: var(--borda); float: left; margin-right: .8rem; line-height: 1; }
-  .questao .enunciado { font-size: .97rem; margin-bottom: 1rem; }
-  .questao .dica-btn { background: var(--verde); color: white; border: none; padding: .45rem 1.1rem; border-radius: 6px; cursor: pointer; font-family: 'Source Serif 4', serif; font-size: .88rem; font-weight: 600; margin-right: .5rem; transition: background .2s; }
-  .questao .dica-btn:hover { background: var(--verde-claro); }
-  .questao .gabarito-btn { background: transparent; color: var(--verde); border: 1.5px solid var(--verde); padding: .45rem 1.1rem; border-radius: 6px; cursor: pointer; font-family: 'Source Serif 4', serif; font-size: .88rem; font-weight: 600; transition: all .2s; }
-  .questao .gabarito-btn:hover { background: var(--verde); color: white; }
-  .questao .dica-box, .questao .gabarito-box { display: none; margin-top: 1rem; padding: 1rem 1.2rem; border-radius: 8px; font-size: .93rem; }
-  .questao .dica-box { background: #fffbe6; border-left: 4px solid var(--amarelo); }
-  .questao .gabarito-box { background: var(--destaque); border-left: 4px solid var(--verde); }
-  .questao .dica-box.visivel, .questao .gabarito-box.visivel { display: block; animation: fadeIn .2s; }
-  .questao strong { color: var(--verde); }
-  .timeline { position: relative; padding-left: 2rem; }
-  .timeline::before { content: ''; position: absolute; left: .6rem; top: 0; bottom: 0; width: 2px; background: var(--borda); }
-  .tl-item { position: relative; margin-bottom: 1.5rem; }
-  .tl-item::before { content: ''; position: absolute; left: -1.7rem; top: .35rem; width: 14px; height: 14px; background: var(--verde); border-radius: 50%; border: 3px solid var(--papel); box-shadow: 0 0 0 2px var(--verde); }
-  .tabela-ratio { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .92rem; }
-  .tabela-ratio th { background: var(--verde); color: white; padding: .6rem .9rem; text-align: left; font-weight: 600; }
-  .tabela-ratio td { padding: .55rem .9rem; border-bottom: 1px solid var(--borda); }
-  .tabela-ratio tr:nth-child(even) td { background: var(--destaque); }
-  .formula { background: #f0f7f3; border: 1.5px dashed var(--verde); border-radius: 8px; padding: 1rem 1.4rem; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--verde); text-align: center; margin: 1rem 0; }
-  /* VIDEOS */
-  .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
-  .video-card { background: var(--papel); border: 1px solid var(--borda); border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.05); transition: transform .2s, box-shadow .2s; }
-  .video-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(26,107,58,.12); }
-  .video-card iframe { width: 100%; height: 185px; display: block; border: none; }
-  .video-info { padding: 1rem 1.2rem; }
-  .video-info .titulo { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--tinta); margin-bottom: .3rem; }
-  .video-info .desc { font-size: .82rem; color: var(--cinza); }
-  .video-tag { display: inline-block; background: var(--destaque); color: var(--verde); font-size: .72rem; font-weight: 700; padding: .15rem .55rem; border-radius: 10px; margin-bottom: .4rem; text-transform: uppercase; letter-spacing: .4px; }
-  footer { text-align: center; padding: 2rem; color: var(--cinza); font-size: .85rem; border-top: 1px solid var(--borda); }
-  @media (max-width: 600px) {
-    nav button { font-size: .75rem; padding: .6rem .5rem; min-width: 70px; }
-    .punnet td, .punnet th { width: 55px; height: 45px; font-size: .95rem; }
-    .video-grid { grid-template-columns: 1fr; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia de Genética — Leis de Mendel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="global.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <header>
   <h1>🧬 Genética — Leis de Mendel</h1>
   <p>Guia completo para estudar sua lista de exercícios</p>
 </header>
+
 <nav>
   <button class="ativo" onclick="mostrar('vocabulario', this)">📖 Vocabulário</button>
   <button onclick="mostrar('1lei', this)">1ª Lei</button>
@@ -106,7 +24,7 @@
   <button onclick="mostrar('videos', this)">▶️ Vídeos</button>
 </nav>
 
-<!-- VOCABULÁRIO -->
+<!-- ==================== VOCABULÁRIO ==================== -->
 <section id="vocabulario" class="secao ativa">
   <h2>📖 Vocabulário Essencial de Genética</h2>
   <p style="color:var(--cinza); margin-bottom:1.5rem;">Clique em cada termo para ver a definição. Sua lista pede que você estude esse vocabulário!</p>
@@ -132,7 +50,7 @@
   </div>
 </section>
 
-<!-- 1ª LEI -->
+<!-- ==================== 1ª LEI ==================== -->
 <section id="1lei" class="secao">
   <h2>1ª Lei de Mendel — Segregação dos Fatores</h2>
   <div class="card card-verde"><span class="badge badge-verde">Enunciado Oficial</span>
@@ -162,7 +80,7 @@
   <p>Exemplo da lista: AabbCcDd → heterozigotos: Aa, Cc, Dd (n=3) → 2³ = <strong>8 gametas</strong></p>
 </section>
 
-<!-- 2ª LEI -->
+<!-- ==================== 2ª LEI ==================== -->
 <section id="2lei" class="secao">
   <h2>2ª Lei de Mendel — Segregação Independente</h2>
   <div class="card card-verde"><span class="badge badge-verde">Enunciado Oficial</span>
@@ -193,7 +111,7 @@
   <div class="formula">Gametas = 2ⁿ &nbsp;|&nbsp; Genótipos = 3ⁿ &nbsp;|&nbsp; Fenótipos = 2ⁿ<br><span style="font-size:.82rem;">(n = pares em heterozigose | dominância completa)</span></div>
 </section>
 
-<!-- EXTRAS -->
+<!-- ==================== EXTRAS ==================== -->
 <section id="especial" class="secao">
   <h2>Tópicos Extras da sua Lista</h2>
   <h3>🩸 Sistema ABO e Fator Rh</h3>
@@ -235,7 +153,7 @@
   </div>
 </section>
 
-<!-- EXERCÍCIOS -->
+<!-- ==================== EXERCÍCIOS ==================== -->
 <section id="exercicios" class="secao">
   <h2>📝 Exercícios da Lista — Com Dicas e Gabarito</h2>
   <p style="color:var(--cinza); margin-bottom:1.5rem;">Tente resolver antes de ver a dica ou gabarito!</p>
@@ -301,7 +219,7 @@
     <button class="dica-btn" onclick="mostrarBox(this,'dica')">💡 Dica</button>
     <button class="gabarito-btn" onclick="mostrarBox(this,'gabarito')">✓ Gabarito</button>
     <div class="dica-box">Pai = XHY. Mãe = XHXh. Filha hemofílica precisaria de Xh do pai — o pai tem?</div>
-    <div class="gabarito-box">Filhas: XHXH e XHXh (nenhuma hemofílica). Pai não tem Xh para passar. <strong>d) 0%</strong></div>
+    <div class="gabarito-box">Filhas: XHXH e XHXh (nenhuma hemofílica). Pai não tem Xh. <strong>d) 0%</strong></div>
   </div>
   <div class="questao">
     <div class="num">16</div>
@@ -313,122 +231,66 @@
   </div>
 </section>
 
-<!-- VÍDEOS -->
+<!-- ==================== VÍDEOS ==================== -->
 <section id="videos" class="secao">
   <h2>▶️ Vídeos Explicativos</h2>
   <p style="color:var(--cinza); margin-bottom:.5rem;">Seleção de vídeos do YouTube para reforçar cada tema da lista. Assista depois de estudar cada seção!</p>
-
   <h3>🧬 Introdução à Genética e Vocabulário</h3>
   <div class="video-grid">
     <div class="video-card">
       <iframe src="https://www.youtube.com/embed/Lxs6L3RO4Ag" allowfullscreen loading="lazy"></iframe>
-      <div class="video-info">
-        <div class="video-tag">Vocabulário</div>
-        <div class="titulo">Genética Básica — Conceitos Fundamentais</div>
-        <div class="desc">Gene, alelo, genótipo, fenótipo, dominante e recessivo explicados do zero.</div>
-      </div>
+      <div class="video-info"><div class="video-tag">Vocabulário</div><div class="titulo">Genética Básica — Conceitos Fundamentais</div><div class="desc">Gene, alelo, genótipo, fenótipo, dominante e recessivo explicados do zero.</div></div>
     </div>
     <div class="video-card">
       <iframe src="https://www.youtube.com/embed/CBezq1fFUEA" allowfullscreen loading="lazy"></iframe>
-      <div class="video-info">
-        <div class="video-tag">Vocabulário</div>
-        <div class="titulo">Homozigoto, Heterozigoto e Gametas</div>
-        <div class="desc">Entenda a diferença entre homozigoto dominante, recessivo e heterozigoto com exemplos práticos.</div>
-      </div>
+      <div class="video-info"><div class="video-tag">Vocabulário</div><div class="titulo">Homozigoto, Heterozigoto e Gametas</div><div class="desc">Entenda a diferença entre homozigoto dominante, recessivo e heterozigoto com exemplos práticos.</div></div>
     </div>
   </div>
-
   <h3>1️⃣ 1ª Lei de Mendel</h3>
   <div class="video-grid">
     <div class="video-card">
       <iframe src="https://www.youtube.com/embed/oLTe0GCfBqw" allowfullscreen loading="lazy"></iframe>
-      <div class="video-info">
-        <div class="video-tag">1ª Lei</div>
-        <div class="titulo">1ª Lei de Mendel — Segregação dos Fatores</div>
-        <div class="desc">Explicação completa da lei da segregação com Quadro de Punnett passo a passo.</div>
-      </div>
+      <div class="video-info"><div class="video-tag">1ª Lei</div><div class="titulo">1ª Lei de Mendel — Segregação dos Fatores</div><div class="desc">Explicação completa da lei da segregação com Quadro de Punnett passo a passo.</div></div>
     </div>
     <div class="video-card">
       <iframe src="https://www.youtube.com/embed/vNBNMOvJiBo" allowfullscreen loading="lazy"></iframe>
-      <div class="video-info">
-        <div class="video-tag">1ª Lei</div>
-        <div class="titulo">Quadro de Punnett — Como Montar</div>
-        <div class="desc">Aprenda a montar o quadro e resolver cruzamentos monohíbridos com facilidade.</div>
-      </div>
+      <div class="video-info"><div class="video-tag">1ª Lei</div><div class="titulo">Quadro de Punnett — Como Montar</div><div class="desc">Aprenda a montar o quadro e resolver cruzamentos monohíbridos com facilidade.</div></div>
     </div>
   </div>
-
   <h3>2️⃣ 2ª Lei de Mendel</h3>
   <div class="video-grid">
     <div class="video-card">
       <iframe src="https://www.youtube.com/embed/dF_f8FhGHhw" allowfullscreen loading="lazy"></iframe>
-      <div class="video-info">
-        <div class="video-tag">2ª Lei</div>
-        <div class="titulo">2ª Lei de Mendel — Segregação Independente</div>
-        <div class="desc">Entenda a proporção 9:3:3:1 e como calcular probabilidades em dihíbridos.</div>
-      </div>
+      <div class="video-info"><div class="video-tag">2ª Lei</div><div class="titulo">2ª Lei de Mendel — Segregação Independente</div><div class="desc">Entenda a proporção 9:3:3:1 e como calcular probabilidades em dihíbridos.</div></div>
     </div>
     <div class="video-card">
       <iframe src="https://www.youtube.com/embed/q3NWFHGCvXI" allowfullscreen loading="lazy"></iframe>
-      <div class="video-info">
-        <div class="video-tag">2ª Lei</div>
-        <div class="titulo">Dihibridismo — Exercícios Resolvidos</div>
-        <div class="desc">Resolução de exercícios de dihibridismo com o macete da multiplicação de probabilidades.</div>
-      </div>
+      <div class="video-info"><div class="video-tag">2ª Lei</div><div class="titulo">Dihibridismo — Exercícios Resolvidos</div><div class="desc">Resolução de exercícios de dihibridismo com o macete da multiplicação de probabilidades.</div></div>
     </div>
   </div>
-
   <h3>🩸 Sistema ABO, Rh e Herança Ligada ao X</h3>
   <div class="video-grid">
     <div class="video-card">
       <iframe src="https://www.youtube.com/embed/1EDKGjqVHfU" allowfullscreen loading="lazy"></iframe>
-      <div class="video-info">
-        <div class="video-tag">Tipo Sanguíneo</div>
-        <div class="titulo">Sistema ABO e Fator Rh</div>
-        <div class="desc">Tipos sanguíneos A, B, AB e O — genótipos, codominância e herança do Rh.</div>
-      </div>
+      <div class="video-info"><div class="video-tag">Tipo Sanguíneo</div><div class="titulo">Sistema ABO e Fator Rh</div><div class="desc">Tipos sanguíneos A, B, AB e O — genótipos, codominância e herança do Rh.</div></div>
     </div>
     <div class="video-card">
       <iframe src="https://www.youtube.com/embed/TD4PpWRhNio" allowfullscreen loading="lazy"></iframe>
-      <div class="video-info">
-        <div class="video-tag">Ligada ao X</div>
-        <div class="titulo">Herança Ligada ao Sexo — Daltonismo e Hemofilia</div>
-        <div class="desc">Como funcionam doenças recessivas ligadas ao cromossomo X, com exercícios.</div>
-      </div>
+      <div class="video-info"><div class="video-tag">Ligada ao X</div><div class="titulo">Herança Ligada ao Sexo — Daltonismo e Hemofilia</div><div class="desc">Como funcionam doenças recessivas ligadas ao cromossomo X, com exercícios.</div></div>
     </div>
     <div class="video-card">
       <iframe src="https://www.youtube.com/embed/mFkO2Bk0HNQ" allowfullscreen loading="lazy"></iframe>
-      <div class="video-info">
-        <div class="video-tag">Heredograma</div>
-        <div class="titulo">Como Resolver Heredogramas</div>
-        <div class="desc">Técnica passo a passo para identificar tipo de herança e genótipos num heredograma.</div>
-      </div>
+      <div class="video-info"><div class="video-tag">Heredograma</div><div class="titulo">Como Resolver Heredogramas</div><div class="desc">Técnica passo a passo para identificar tipo de herança e genótipos num heredograma.</div></div>
     </div>
   </div>
 </section>
 
+<!-- ==================== FOOTER ==================== -->
 <footer>
   <p>🧬 Guia de Estudos — Genética | Leis de Mendel</p>
   <p style="margin-top:.3rem;">Bons estudos! Vocabulário → Leis → Exercícios → Vídeos 🚀</p>
 </footer>
 
-<script>
-function mostrar(id, btn) {
-  document.querySelectorAll('.secao').forEach(s => s.classList.remove('ativa'));
-  document.querySelectorAll('nav button').forEach(b => b.classList.remove('ativo'));
-  document.getElementById(id).classList.add('ativa');
-  btn.classList.add('ativo');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-function toggle(el) { el.classList.toggle('aberto'); }
-function mostrarBox(btn, tipo) {
-  const q = btn.closest('.questao');
-  const box = q.querySelector('.' + tipo + '-box');
-  box.classList.toggle('visivel');
-  btn.textContent = box.classList.contains('visivel')
-    ? (tipo === 'dica' ? '💡 Ocultar' : '✓ Ocultar')
-    : (tipo === 'dica' ? '💡 Dica' : '✓ Gabarito');
-}
-</script>
+<script src="scripts.js"></script>
 </body>
 </html>

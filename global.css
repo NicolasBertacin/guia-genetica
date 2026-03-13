@@ -1,0 +1,123 @@
+/* ============================================================
+   global.css — Variáveis, reset e estilos base de layout
+   ============================================================ */
+
+:root {
+  --verde: #1a6b3a;
+  --verde-claro: #2d9657;
+  --amarelo: #f5c842;
+  --bg: #f7f4ee;
+  --papel: #fffef9;
+  --tinta: #1c1c1c;
+  --cinza: #6b6b6b;
+  --borda: #d4c9a8;
+  --destaque: #e8f5ee;
+  --vermelho: #c0392b;
+  --azul: #1a4f8b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--bg);
+  color: var(--tinta);
+  line-height: 1.7;
+}
+
+/* --- Header --- */
+header {
+  background: var(--verde);
+  color: white;
+  padding: 3rem 2rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,.03) 20px, rgba(255,255,255,.03) 40px);
+}
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -1px;
+  position: relative;
+  text-shadow: 0 2px 12px rgba(0,0,0,.3);
+}
+header p {
+  margin-top: .7rem;
+  font-size: 1.05rem;
+  opacity: .85;
+  position: relative;
+}
+
+/* --- Nav --- */
+nav {
+  background: var(--papel);
+  border-bottom: 2px solid var(--borda);
+  display: flex;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+nav button {
+  flex: 1 1 auto;
+  min-width: 110px;
+  padding: .9rem 1rem;
+  font-family: 'Source Serif 4', serif;
+  font-size: .85rem;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  color: var(--cinza);
+  transition: all .2s;
+}
+nav button:hover { color: var(--verde); background: var(--destaque); }
+nav button.ativo  { color: var(--verde); border-bottom-color: var(--verde); background: var(--destaque); }
+
+/* --- Sections --- */
+.secao { display: none; max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+.secao.ativa { display: block; animation: fadeIn .3s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --- Typography --- */
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--verde);
+  margin-bottom: 1.5rem;
+  padding-bottom: .6rem;
+  border-bottom: 2px solid var(--borda);
+}
+h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: var(--tinta); margin: 2rem 0 .8rem; }
+p  { margin-bottom: 1rem; }
+
+/* --- Footer --- */
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--cinza);
+  font-size: .85rem;
+  border-top: 1px solid var(--borda);
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+  nav button { font-size: .75rem; padding: .6rem .5rem; min-width: 70px; }
+}
